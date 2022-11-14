@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeWars
+namespace CodeWars    // https://www.codewars.com/kata/55f1614853ddee8bd4000014/train/csharp
 {
     internal class Program
     {
