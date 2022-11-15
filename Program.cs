@@ -1,37 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeWars    // https://www.codewars.com/kata/52aaf51822e82a808100066b/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/628df6b29070907ecb3c2d83/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var a = ReplaceAll("SWYN", "", "imtu");
+            var res = SpeedAndTime(73, 9);
+            Console.WriteLine(res);
         }
-        public static string ReplaceAll(string input, string find, string replace)
+        public static int SpeedAndTime(int s, int t)
         {
+            int sh = s*(t-1) + s*2;
             
-            if (find == "")  //0-4 5 5-9 
+            for (int i = 1; i <= t; i+=2)    
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append(input);
-                //    stringBuilder.Insert(0 , replace);
-
-                var az = (input.Length + 1) * replace.Length + input.Length;
-                for (int i = 0; stringBuilder.Length < az; i++)
-                {
-                    stringBuilder.Insert(i * replace.Length + i, replace);
-                }
-                return stringBuilder.ToString();
+                int distance = FindDistance(s, t, i);    
+                
+                if (distance > sh)
+                    sh = distance;
+                
             }
-            var a = input.Replace(find, replace);
-
-
-            return a;
+            return sh;
         }
+        public static int FindDistance(int s, int t, int a)   // a it is number of change
+        {
+            int sh = 0;
+            int i = 0;
+            for (; i < t - a ; i++)
+            {
+                sh += s;
+            }
+            while (i < t)
+            {
+                sh += s * 2;
+                s--;
+                i++;
+                if (i < t)
+                {
+                    sh += s;
+                    i++;
+                }
+            }
+            return sh;
+        }
+
+
     }
 }
