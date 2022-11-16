@@ -5,40 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CodeWars    // https://www.codewars.com/kata/587731fda577b3d1b0001196/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/514b92a657cdc65150000006/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var res = CamelCase(" camel case word");
+            var res = Solution(20);
             Console.WriteLine(res + "*");
         }
-        public static string CamelCase(string str)
+        public static int Solution(int value)
         {
-            if (str.Length == 0)
-                return str;
+            if (value <= 0)
+                return 0;
+
+            int sh = 0;
+            for (int i = 1; i * 3 < value; i++)            
+                sh += i * 3;
             
-            StringBuilder stringBuilder = new StringBuilder();
-           
-            bool ToUp = false;
-            for (int i = 0; i < str.Length; i++)
+            for (int i = 1; i * 5 < value; i++)
             {
-                if (str[i] == ' ')
-                {
-                    ToUp = true;
-                    continue;                    
-                }
-                if (ToUp)
-                {
-                    stringBuilder.Append(Char.ToUpper(str[i]));
-                    ToUp = false;
+                if (i % 3 == 0)
                     continue;
-                }   
-                stringBuilder.Append(str[i]);
+
+                sh += i * 5;
             }
-            stringBuilder[0] = Char.ToUpper( stringBuilder[0]);
-            return stringBuilder.ToString();
+            return sh;
         }
     }
 }
