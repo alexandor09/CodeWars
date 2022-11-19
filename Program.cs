@@ -1,36 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace CodeWars    // https://www.codewars.com/kata/514b92a657cdc65150000006/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/5503013e34137eeeaa001648/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var res = Solution(20);
-            Console.WriteLine(res + "*");
+            var res = print(5);           
         }
-        public static int Solution(int value)
+        public static string print(int n)
         {
-            if (value <= 0)
-                return 0;
-
-            int sh = 0;
-            for (int i = 1; i * 3 < value; i++)            
-                sh += i * 3;
-            
-            for (int i = 1; i * 5 < value; i++)
+            if (n < 1 || n%2 == 0)
             {
-                if (i % 3 == 0)
-                    continue;
-
-                sh += i * 5;
+                return null;
             }
-            return sh;
+            int heigth = n / 2 + 1;
+
+            StringBuilder stringBuilder = new StringBuilder();
+            int i = 0;
+            int sh = 1;
+            for (int a = 0; a < 2; a++)
+            {
+                while ( i < heigth && i > -1)
+                {
+                    stringBuilder.Append(String.Concat(Enumerable.Repeat(" ", heigth - i - 1)));
+                    stringBuilder.Append(String.Concat(Enumerable.Repeat("*", i * 2 + 1)));
+                    stringBuilder.Append("\n");
+                    i += sh;
+                }
+                i -= 2;
+                sh = -1;
+            }   
+
+            return stringBuilder.ToString();            
         }
     }
 }
