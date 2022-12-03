@@ -3,51 +3,62 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace CodeWars    // https://www.codewars.com/kata/526dbd6c8c0eb53254000110/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/55f4e56315a375c1ed000159/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var a = Alphanumeric("Mazinkaiser");
-            Console.WriteLine(a);
+            var a = PowerSumDigTerm(23);
+            Console.WriteLine("answer " + a);
         }
-
-        public static bool Alphanumeric(string str)
+        public static long PowerSumDigTerm(int n)
         {
-            if (str.Length == 0)
+            int result = 4;            
+            int sh1 = 0;
+            long[] arr = new long[35];
+            while (sh1 <= 34)
             {
-                return false;
-            }
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (IsCharOrDec(str[i]))
+                for (int i = 2; i < 10; i++)
                 {
-                    continue;
-                }              
-                return false;
-            }
-            return true;
-        }
-
-        static Predicate<char> IsCharOrDec = (char a) =>
-        {
-            int b = a;
-
-            if (b > 64 && b < 123)  // IsChar
-            {
-                if (b > 90 && b < 97)
-                {
-                    return false;
+                    if (IsEq(Math.Pow(result, i)))
+                    {
+                        Console.WriteLine($"FIND!!! {Math.Pow(result, i)}   {sh1}");
+                        arr[sh1] = (long)Math.Pow(result, i);
+                        sh1++;
+                    }
                 }
-                return true;
+                Console.WriteLine(result);
+                result++;
+                
             }
-
-            if (b > 47 && b < 58)  // is Numeric
-                return true;
+            Array.Sort(arr);
+            var resArr = arr.Distinct().ToArray();            
+            return resArr[n - 1];
+           
+        }
+        public static bool IsEq (double x)
+        {
+            var a = x.ToString();
+            int res = 0;
+            long result = (long)x;
+            for (int i = 0; i < Math.Log10(x); i++)
+            {
+                res += (int)(result - (int)(result / 10) * 10);
+                result /= 10;
+            }           
+            if (res <=1)            
+                return false;
             
-            return false;
-        };
+            result = 1L;
 
+            while (result < x)           
+                result *= res;
+            
+            if (result == x)
+                return true;
+
+            return false;
+        }
     }
 }
