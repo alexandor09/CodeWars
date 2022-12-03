@@ -3,33 +3,37 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace CodeWars    // https://www.codewars.com/kata/52685f7382004e774f0001f7/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/5541f58a944b85ce6d00006a/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var a = GetReadableTime(359999);
+            var a = productFib(4895);
             Console.WriteLine("answer " + a);
-        }
-        public static string GetReadableTime(int seconds)
-        {
-            if (seconds > 359999)            
-                return "99:59:59";
 
-            if (seconds >= 86400)
+            foreach (var item in a)
             {
-                int day = seconds / 86400;
-                seconds -= day * 86400;
-
-                var b = TimeSpan.FromSeconds(seconds);
-                var str = b.ToString();
-                int hour = int.Parse(str.Substring(0, 2)) + 24 * day;
-                str = hour.ToString() + str.Substring(2,str.Length-2);
-                return str;
+                Console.WriteLine(item);
             }
-            var c = TimeSpan.FromSeconds(seconds);
-            return c.ToString();
         }
+        public static ulong[] productFib(ulong prod)
+        {
+            ulong n1 = 0;
+            ulong n2 = 1;
+            while (n1 * n2 < prod)
+            {
+                ulong temp = n2;
+                n2 += n1;   
+                n1 = temp;
+            }
+
+            ulong[] arr = new ulong[] { n1, n2, 0 };
+
+            if (n1 * n2 == prod)            
+                arr[2] = 1;        
+            
+            return arr;
+        }        
     }
 }
