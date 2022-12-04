@@ -5,38 +5,56 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 
-namespace CodeWars    // https://www.codewars.com/kata/54521e9ec8e60bc4de000d6c/train/csharp
+namespace CodeWars    // https://www.codewars.com/kata/561e9c843a2ef5a40c0000a4/train/csharp
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            var a = MaxSequence(new int[] { -4, -8, 22, 1, -38, 12, 30, -28, 30, 10, -20, 19, 25, -19, -15, 13, -20, 17, 37, -38, -33, 9, 37, -32, 11, -12, -3, -21, 36, -6, -20, 27, -27, 16, -20, -24, 4, -2, -10, 23, -4, 0, -31, -26, 16, 30, 6, 19, -6, 39, 25, -7, -9, 0, -7, -8, -10, 31, -31, 25, -40, -31, 3, -36, -9, -37, -4, 35, -16, 36, 34, 24, 12, -28, 32, -38, -9, -25, 18, 4, 11, 25, -7, -12, -27, 22, 23, -19, 36, -38, -38, -11, -13, -31, -11, 34, -30, -14, 16, 6});
+            var a = Gap(10, 1301, 1401);
             Console.WriteLine("answer " + a);
+            foreach (var item in a)
+            {
+                Console.WriteLine(item);
+            }
             
         }
-        public static int MaxSequence(int[] arr)
-        {
-            int sum = 0;
-            int sum2 = 0;            
-            List<int> list = new List<int>();
-            for (int i = 0; i < arr.Length; i++)
-            {
-                if (arr[i] > 0)
-                {
-                    sum = arr[i];   
+        public static long[] Gap(int g, long m, long n)
+        {          
+            if (m % 2 == 0)
+                m++;
 
-                    for (; sum > 0 && i < arr.Length - 1;)
+            while (m + g <= n)
+            {    
+                if (IsSimple(m) && IsSimple(m + g))
+                {
+                    if (g == 2)
+                        return new long[] { m, (m + g) };
+                   
+
+                    for (int i = 2; i < g; i+=2)
                     {
-                        i++;
-                        sum += arr[i];
-                        if (sum > sum2)
-                            sum2 = sum;
-                    }                   
+                        if (IsSimple(m + i))
+                           break;
+                       
+                        else if (i + 2 == g)
+                            return new long[] { m, (m + g) };
+                    }
                 }
+                m+=2;
             }
-            return sum2;
+            return null;
         }
 
+        public static bool IsSimple(long n)
+        {
+            double length = Math.Sqrt((double)n) + 1;
+            for (int i = 3; i < length; i+=2)
+            {
+                if (n % i == 0)
+                    return false;
+            }
+            return true;
+        }
     }
 }
